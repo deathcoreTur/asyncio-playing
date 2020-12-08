@@ -1,42 +1,40 @@
-import random
 import asyncio
-from time import sleep
+import datetime
 
 
-def task(number: int, message: str) -> None:
-    timeout = random.randint(0, 2)
-    print(f'Timeout is {timeout}')
-    sleep(timeout)
-    print(f'{message} from task # {number}')
+async def task(name: str, timeout: int, message: str) -> None:
+    print('*'*50)
+    start = datetime.datetime.now()
 
+    print(f'Run {name} \t Start: {start} \t Timeout is {timeout}')
+    await asyncio.sleep(timeout)
+    print(f'{message} from task # {name}')
 
-def synchronous(message: str) -> None:
-    for i in range(1, 4):
-        task(i, message)
-
-
-async def task_async(number: int, message: str) -> None:
-    timeout = random.randint(1, 5)
-    print(f'Timeout is {timeout} for task {number}')
-
-    while True:
-        await asyncio.sleep(timeout)
-        print(f'{message} from task # {number}')
-
-        if timeout > 0:
-            break
-
-
-async def asynchronous(message: str) -> None:
-    tasks = [asyncio.ensure_future(task_async(i, message)) for i in range(1, 4)]
-    await asyncio.wait(tasks)
+    end = datetime.datetime.now()
+    print(f'End: {end}, \t Executed: {end - start}')
 
 
 if __name__ == "__main__":
-    synchronous('Synchronous')
+    print('Asynchronous!!!')
+    tasks_async = [
+        task('Task 1', 2, 'Hello'),
+        task('Task 2', 1, 'Hello'),
+        task('Task 3', 3, 'Hello'),
+    ]
+    asyncio.run(asyncio.wait(tasks_async))
 
-    print('*'*50)
+    print('Synchronous!!!')
+    tasks_sync = [
+        task('Task 1', 2, 'Hello'),
+        task('Task 2', 1, 'Hello'),
+        task('Task 3', 3, 'Hello'),
+    ]
 
-    ioloop = asyncio.get_event_loop()
-    ioloop.run_until_complete(asynchronous('Asynchronous'))
-    ioloop.close()
+    async def main(task, tasks):
+        for task in tasks:
+            try:
+                await asyncio.wait_for(task, timeout=None)
+            except asyncio.TimeoutError:
+                print('timeout!')
+
+    asyncio.run(main(task, tasks_sync))
