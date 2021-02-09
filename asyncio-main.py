@@ -7,8 +7,11 @@ async def task(name: str, timeout: int, message: str) -> None:
     start = datetime.datetime.now()
 
     print(f'Run {name} \t Start: {start} \t Timeout is {timeout}')
-    await asyncio.sleep(timeout)
-    print(f'{message} from task # {name}')
+    while True:
+        await asyncio.sleep(timeout)
+        print(f'{message} from task # {name}')
+        if timeout > 0:
+            break
 
     end = datetime.datetime.now()
     print(f'End: {end}, \t Executed: {end - start}')
@@ -38,3 +41,16 @@ if __name__ == "__main__":
                 print('timeout!')
 
     asyncio.run(main(task, tasks_sync))
+
+    # tasks_infinite = [
+    #     task('Task 1', 2, 'Hello'),
+    #     task('Task 2', 0, 'Hello'),
+    #     task('Task 3', 3, 'Hello'),
+    # ]
+    #
+    #
+    # async def wrap(tasks):
+    #     for task in tasks:
+    #         await asyncio.ensure_future(task)
+    #
+    # asyncio.run(wrap(tasks_infinite))
