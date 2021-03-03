@@ -12,6 +12,22 @@
 #     th = Thread(target=sleepMe, args=(i, ))
 #     th.start()
 
+# ----------------------------------------------------
+# import time
+# import random
+#
+#
+# def sleepMe(i):
+#     # sleep = random.randint(0,2)
+#     print(f"Задача {i} засыпает на {1} секунду.\n")
+#     time.sleep(1)
+#     print(f"Задача {i} сейчас проснулся.\n")
+#
+#
+# for i in range(10):
+#     sleepMe(i)
+
+
 # -----------------------------------------------------
 
 # import time
@@ -36,25 +52,26 @@
 # from threading import Thread
 #
 #
-# def sleepMe(i):
-#     print(f"Поток {threading.current_thread()} засыпает на 5 секунд.\n")
+# def sleepMe(i, test):
+#     print(f"Поток {threading.current_thread()} засыпает на 5 секунд.  {test}\n")
 #     time.sleep(5)
 #     print(f"Поток {threading.current_thread()} сейчас проснулся.")
 #
 #
 # # Cоздаем только четыре потока
-# for i in range(10):
-#     th = Thread(target=sleepMe, args=(i, ))
+# for i in range(4):
+#     test= 'sssss'
+#     th = Thread(name=f'Test {i}', target=sleepMe, args=(i, test))
 #     th.start()
-#
+
 
 # -----------------------------------------------------
 
-import logging
-import threading
-import time
-
-
+# import logging
+# import threading
+# import time
+#
+#
 # def thread_function(name):
 #     logging.info("Thread %s: starting", name)
 #     time.sleep(2)
@@ -99,7 +116,7 @@ import time
 #     logging.info("Main    : all done")
 
 # -----------------------------------------------------
-#
+
 # import threading
 # import datetime
 #
@@ -270,6 +287,8 @@ print(f"finally counter: {counter}")
 # for thread in threads:
 #     thread.join()
 # print(f'Finally counter {counter}')
+
+
 
 
 

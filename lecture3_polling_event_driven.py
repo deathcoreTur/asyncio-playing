@@ -16,7 +16,7 @@
 #    executor = ThreadPoolExecutor(5)
 #    future = executor.submit(task, ("Completed"))
 #    print(future.done())
-#    sleep(2)
+#    sleep(3)
 #    print(future.done())
 #    print(future.result())
 #
@@ -25,8 +25,8 @@
 #    sleep(1)
 #    print(future2.done())
 #    print(future2.result())
-
-
+#
+#
 # if __name__ == '__main__':
 #     main()
 
@@ -82,17 +82,19 @@
 #          print(f'{url} page is {len(data)} bytes')
 
 # --------------------------------------------------------
+# import time
 # from concurrent.futures import ThreadPoolExecutor
+#
 #
 # def wait_on_future():
 #     f = 3
-#     import time
 #     time.sleep(4)
 #     print(f)
 #
+#
 # executor = ThreadPoolExecutor(max_workers=2)
 # executor.submit(wait_on_future)
-# # executor.shutdown(wait=True)
+# executor.shutdown(wait=True)
 #
 # print("elo")
 
@@ -121,7 +123,7 @@
 #
 #
 # def main():
-#    with ThreadPoolExecutor(max_workers = 3) as executor:
+#    with ThreadPoolExecutor(max_workers=3) as executor:
 #       results = executor.map(square, values)
 #       for result in results:
 #             print(result)
@@ -337,7 +339,7 @@
 # print("Total time: {}".format(end - start))
 
 # -------------------------------------------------
-
+#
 # def basic_coroutine1(start):
 #     print('Start value:', start)
 #     first = yield
@@ -380,8 +382,11 @@
 # -------------------------------------------------
 # def basic_coroutine3(items):
 #     collection = [i for i in items]
+#     print('inizialization')
 #     while True:
+#         print('return collection')
 #         item = yield collection
+#         print(f'get new item {item}')
 #         collection.append(item)
 #
 #
@@ -432,16 +437,16 @@
 #     print(f'time: {time.time() - start}')
 
 # -------------------------------------------------
-# from math import sqrt
-# import asyncio
-# import time
-#
-# # Для улучшения отзывчивости мы бы хотели переключать
-# # задачи на протяжнии своей большой задачи и не делать
-# # этого в маленькой задаче. Такая настройка позволит
-# # нашим средней и малой задачам стартовать, выполняться,
-# # а может быть даже и завершиться во время исполнения
-# # самой большой задачи
+from math import sqrt
+import asyncio
+import time
+
+# Для улучшения отзывчивости мы бы хотели переключать
+# задачи на протяжнии своей большой задачи и не делать
+# этого в маленькой задаче. Такая настройка позволит
+# нашим средней и малой задачам стартовать, выполняться,
+# а может быть даже и завершиться во время исполнения
+# самой большой задачи
 # async def is_prime(x):
 #     print(f'Processing {x}...')
 #

@@ -126,28 +126,47 @@
 #     print()
 #     print('Time taken = {} seconds'.format(time.time() - start_time))
 
-# --------------------------------------------------------------
+# -------------------------------------------------------------
+# import multiprocessing
 # import time
-# from multiprocessing import Process
+# import sys
 #
 #
-# def non_daemon_process():
-#     print("starting my Process")
-#     time.sleep(8)
-#     print("ending my Process")
+# def daemon():
+#     p = multiprocessing.current_process()
+#     print('Starting:', p.name, p.pid)
+#     # sys.stdout.flush()
+#     time.sleep(2)
+#     print('Exiting :', p.name, p.pid)
+#     # sys.stdout.flush()
 #
 #
-# def daemon_process():
-#     while True:
-#         print("Hello")
-#         time.sleep(2)
+# def non_daemon():
+#     p = multiprocessing.current_process()
+#     print('Starting:', p.name, p.pid)
+#     # sys.stdout.flush()
+#     print('Exiting :', p.name, p.pid)
+#     # sys.stdout.flush()
 #
 #
 # if __name__ == '__main__':
-#     non_daemon = Process(target=non_daemon_process, daemon=False)
-#     daemon = Process(target=daemon_process, daemon=True)
-#     daemon.start()
-#     non_daemon.start()
+#     d = multiprocessing.Process(
+#         name='daemon',
+#         target=daemon,
+#         daemon=True
+#     )
+#
+#     n = multiprocessing.Process(
+#         name='non-daemon',
+#         target=non_daemon,
+#         daemon=False
+#     )
+#
+#     d.start()
+#     time.sleep(1)
+#     n.start()
+#     d.join()
+#     n.join()
 
 # --------------------------------------------------------------
 # import time
@@ -161,7 +180,7 @@
 #
 #
 # if __name__ == '__main__':
-#     P = multiprocessing.Process(target=child_process)
+#     P = multiprocessing.Process(target=child_process, daemon=True)
 #     P.start()
 #     print("My Process has terminated, terminating main thread")
 #     print("Terminating Child Process")
@@ -213,12 +232,12 @@
 #
 #
 # def printer(item, lock):
-#     # lock.acquire()
+#     lock.acquire()
 #     try:
 #         print(item)
 #         time.sleep(2)
 #     finally:
-#         # lock.release()
+#         lock.release()
 #         pass
 #
 #
@@ -230,9 +249,31 @@
 #         p = Process(target=printer, args=(item, lock))
 #         p.start()
 
+# -------------------------------------------------------------
+# import time
+# from multiprocessing import Process, Lock
+#
+#
+# def printer(item,):
+#     # lock.acquire()
+#     try:
+#         print(item)
+#         time.sleep(2)
+#     finally:
+#         # lock.release()
+#         pass
+#
+#
+# if __name__ == '__main__':
+#     # lock = Lock()
+#     items = ['tango', 'foxtrot', 10]
+#
+#     for item in items:
+#         p = Process(target=printer, args=(item,))
+#         p.start()
 # --------------------------------------------------------------
-
-# from multiprocessing import Process, Queue
+#
+ 
 #
 #
 # def creator(data, q):
@@ -258,31 +299,32 @@
 #     process_two = Process(target=my_consumer, args=(q,))
 #     process_one.start()
 #     process_two.start()
-#     process_one.join()
-#     process_two.join()
+#     # process_one.join()
+#     # process_two.join()
+#
 
 # --------------------------------------------------------------
-# import multiprocessing
-#
-#
-# def worker():
-#     # print(id(LIST))
-#     LIST.append('item')
-#
-#
-# LIST = []
-#
-#
-# if __name__ == "__main__":
-#     processes = [
-#         multiprocessing.Process(target=worker)
-#         for _ in range(5)
-#     ]
-#     for p in processes:
-#         p.start()
-#     for p in processes:
-#         p.join()
-#     print(LIST)
+import multiprocessing
+
+
+def worker():
+    print(id(LIST))
+    LIST.append('item')
+
+
+LIST = []
+
+
+if __name__ == "__main__":
+    processes = [
+        multiprocessing.Process(target=worker)
+        for _ in range(5)
+    ]
+    for p in processes:
+        p.start()
+    for p in processes:
+        p.join()
+    print(LIST)
 
 # --------------------------------------------------------------
 # USING MANAGER
